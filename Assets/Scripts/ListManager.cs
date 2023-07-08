@@ -58,6 +58,11 @@ public class ListManager : MonoBehaviour
         }
         uiListManager.UpdateList(displayList);
 
+        for (int i = 0; i < listSize; i++)
+        {
+            visualNumberInstances[i].sizeDelta = new Vector2(0, sortingList[i]);
+        }
+
         if (instructions.Length > 0)
         {
             timeSinceInstruction += Time.deltaTime;
