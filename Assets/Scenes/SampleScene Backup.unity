@@ -343,8 +343,8 @@ MonoBehaviour:
   textPrefab: {fileID: 3420339241250496877, guid: 50bc7c4f6067535449ab95ff3153f7fe, type: 3}
   maxCommands: 5
   sequenceGridRadius: 0
-  sequenceGridX: -290
-  sequenceGridY: 115
+  sequenceGridX: 290
+  sequenceGridY: -115
   sequenceSpacing: 30
 --- !u!4 &161180592
 Transform:
@@ -2929,6 +2929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1762bd8cdb607504787c5c0bcba5882c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointerNumber: 0
 --- !u!1 &1920030464
 GameObject:
   m_ObjectHideFlags: 0
