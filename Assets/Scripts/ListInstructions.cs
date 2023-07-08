@@ -9,4 +9,6 @@ public enum ListInstruction
     swapRight,
     swapLeft,
     invertInstructions,
+    markCell,
+    swapWithMarkedCell,
 }

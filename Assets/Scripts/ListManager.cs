@@ -29,6 +29,7 @@ public class ListManager : MonoBehaviour
     private int currentInstruction = 0;
     private bool finishedAlgorithm = false;
     private int left = -1, right = 1;
+    private int markedCell = -1;
 
     private void Awake()
     {
@@ -68,7 +69,7 @@ public class ListManager : MonoBehaviour
 
         for (int i = 0; i < listSize; i++)
         {
-            visualNumberInstances[i].sizeDelta = new Vector2(0, sortingList[i]);
+            visualNumberInstances[i].sizeDelta = new Vector2(0, sortingList[i]+1);
         }
     }
 
@@ -126,6 +127,12 @@ public class ListManager : MonoBehaviour
             case ListInstruction.invertInstructions:
                 InvertInstructions(); // Swap left and right
                 break;
+            case ListInstruction.markCell:
+                MarkCell();
+                break;
+            case ListInstruction.swapWithMarkedCell:
+                SwapWithMarkedCell();
+                break;
         }
     }
 
@@ -153,5 +160,16 @@ public class ListManager : MonoBehaviour
         left *= -1;
     }
 
+    private void MarkCell()
+    {
+        markedCell = listPointer;
+    }
+
+    private void SwapWithMarkedCell()
+    {
+        int temp = sortingList[listPointer];
+        sortingList[listPointer] = sortingList[markedCell];
+        sortingList[markedCell] = temp;
+    }
     #endregion
 }
