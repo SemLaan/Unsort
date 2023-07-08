@@ -133,7 +133,40 @@ public class ListManager : MonoBehaviour
             case ListInstruction.swapWithMarkedCell:
                 SwapWithMarkedCell();
                 break;
+            case ListInstruction.ifIdxGreaterThanNumber:
+                if (listPointer <= sortingList[listPointer])
+                    currentInstruction = (currentInstruction + 1) % instructions.Length;
+                break;
+            case ListInstruction.ifIdxLessThanNumber:
+                if (listPointer >= sortingList[listPointer])
+                    currentInstruction = (currentInstruction + 1) % instructions.Length;
+                break;
+            case ListInstruction.ifNumberGreaterThanIdx:
+                if (sortingList[listPointer] <= listPointer)
+                    currentInstruction = (currentInstruction + 1) % instructions.Length;
+                break; 
+            case ListInstruction.ifNumberLessThanIdx:
+                if (sortingList[listPointer] >= listPointer)
+                    currentInstruction = (currentInstruction + 1) % instructions.Length;
+                break;
+            case ListInstruction.ifNumberGreaterThanMarked:
+                if (sortingList[markedCell] >= sortingList[listPointer])
+                    currentInstruction = (currentInstruction + 1) % instructions.Length;
+                break;
+            case ListInstruction.ifNumberLessThanMarked:
+                if (sortingList[markedCell] <= sortingList[listPointer])
+                    currentInstruction = (currentInstruction + 1) % instructions.Length;
+                break;
+            case ListInstruction.ifIdxGreaterThanMarked:
+                if (sortingList[markedCell] >= listPointer)
+                    currentInstruction = (currentInstruction + 1) % instructions.Length;
+                break;
+            case ListInstruction.ifIdxLessThanMarked:
+                if (sortingList[markedCell] <= listPointer)
+                    currentInstruction = (currentInstruction + 1) % instructions.Length;
+                break;
         }
+        CheckIfFinished();
     }
 
     #region Instruction functions
@@ -141,7 +174,6 @@ public class ListManager : MonoBehaviour
     private void Move(int direction)
     {
         listPointer += direction;
-        CheckIfFinished();
     }
 
     private void Swap(int direction)

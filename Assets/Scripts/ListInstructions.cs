@@ -11,4 +11,12 @@ public enum ListInstruction
     invertInstructions,
     markCell,
     swapWithMarkedCell,
+    ifIdxGreaterThanNumber,
+    ifIdxLessThanNumber,
+    ifNumberGreaterThanIdx,
+    ifNumberLessThanIdx,
+    ifNumberGreaterThanMarked,
+    ifNumberLessThanMarked,
+    ifIdxGreaterThanMarked,
+    ifIdxLessThanMarked,
 }
