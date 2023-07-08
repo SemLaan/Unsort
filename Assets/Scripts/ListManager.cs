@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 
@@ -13,6 +14,7 @@ public class ListManager : MonoBehaviour
     // UI
     [SerializeField] private RectTransform visualList;
     [SerializeField] private GameObject visualNumberPrefab;
+    [SerializeField] private TMP_Text randomnessUIElement;
     private RectTransform[] visualNumberInstances = null;
     private UIListManager uiListManager;
     private int visibleNumbers = 0;
@@ -48,6 +50,25 @@ public class ListManager : MonoBehaviour
 
     private void Update()
     {
+        if (instructions.Length > 0)
+        {
+            timeSinceInstruction += Time.deltaTime;
+            if (timeSinceInstruction > instructionDuration)
+            {
+                timeSinceInstruction -= instructionDuration;
+
+                if (!finishedAlgorithm)
+                {
+                    NextInstruction();
+                }
+            }
+        }
+
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
         int[] displayList = new int[visibleNumbers];
         for (int i = 0; i < visibleNumbers; i++)
         {
@@ -62,20 +83,18 @@ public class ListManager : MonoBehaviour
         {
             visualNumberInstances[i].sizeDelta = new Vector2(0, sortingList[i]);
         }
+    }
 
-        if (instructions.Length > 0)
-        {
-            timeSinceInstruction += Time.deltaTime;
-            if (timeSinceInstruction > instructionDuration)
-            {
-                timeSinceInstruction -= instructionDuration;
+    private void CheckIfFinished()
+    {
+        if (listPointer < 0 || listPointer >= listSize)
+            FinishAlgorithm();
+    }
 
-                if (!finishedAlgorithm)
-                {
-                    NextInstruction();
-                }
-            }
-        }
+    private void FinishAlgorithm()
+    {
+        finishedAlgorithm = true;
+        randomnessUIElement.text = "Randomness: " + RandomnessGrade.GradeRandomness(sortingList);
     }
 
     private void NextInstruction()
@@ -86,8 +105,6 @@ public class ListManager : MonoBehaviour
 
     private void ExecuteInstruction(ListInstruction instruction)
     {
-        int temp = 0;
-
         switch (instruction)
         {
             case ListInstruction.moveRight:
@@ -97,16 +114,10 @@ public class ListManager : MonoBehaviour
                 Move(left); // move left
                 break;
             case ListInstruction.swapRight:
-                if (listPointer + 1 >= listSize)
-                    break;
-                temp = sortingList[listPointer];
-                sortingList[listPointer] = sortingList[listPointer + 1];
-                sortingList[listPointer + 1] = temp;
+                Swap(right); // swap the current element with the element to the right
                 break;
             case ListInstruction.swapLeft:
-                temp = sortingList[listPointer];
-                sortingList[listPointer] = sortingList[listPointer - 1];
-                sortingList[listPointer - 1] = temp;
+                Swap(left); // swap the current element with the element to the left
                 break;
         }
     }
@@ -116,8 +127,17 @@ public class ListManager : MonoBehaviour
     private void Move(int direction)
     {
         listPointer += direction;
-        if (listPointer < 0 || listPointer >= listSize)
-            finishedAlgorithm = true;
+        CheckIfFinished();
+    }
+
+    private void Swap(int direction)
+    {
+        // If trying to access array element that is out of bounds return
+        if (listPointer + direction >= listSize || listPointer + direction < 0)
+            return;
+        int temp = sortingList[listPointer];
+        sortingList[listPointer] = sortingList[listPointer + direction];
+        sortingList[listPointer + direction] = temp;
     }
 
     #endregion
