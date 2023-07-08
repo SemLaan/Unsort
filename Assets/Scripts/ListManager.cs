@@ -3,23 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum ListInstruction
-{
-    moveRight,
-    moveLeft,
-    swapRight,
-    swapLeft,
-}
-
 public class ListManager : MonoBehaviour
 {
-
 
     // Instruction execution duration
     [SerializeField] private float instructionDuration = 0f;
     private float timeSinceInstruction = 0f;
 
     // UI
+    [SerializeField] private RectTransform visualList;
+    [SerializeField] private GameObject visualNumberPrefab;
+    private RectTransform[] visualNumberInstances = null;
     private UIListManager uiListManager;
     private int visibleNumbers = 0;
 
@@ -38,9 +32,12 @@ public class ListManager : MonoBehaviour
     {
         uiListManager = FindObjectOfType<UIListManager>();
         sortingList = new int[listSize];
+        visualNumberInstances = new RectTransform[listSize];
         for (int i = 0; i < sortingList.Length; i++)
         {
             sortingList[i] = i;
+            visualNumberInstances[i] = Instantiate<GameObject>(visualNumberPrefab, visualList).GetComponent<RectTransform>();
+            visualNumberInstances[i].sizeDelta = new Vector2(0, i);
         }
     }
 
