@@ -13,11 +13,24 @@ public enum ListInstruction
 
 public class ListManager : MonoBehaviour
 {
-    [SerializeField] private int listSize = 100;
+
+
+    // Instruction execution duration
+    [SerializeField] private float instructionDuration = 0f;
+    private float timeSinceInstruction = 0f;
+
+    // UI
     private UIListManager uiListManager;
     private int visibleNumbers = 0;
+
+    // Sorting list
+    [SerializeField] private int listSize = 100;
     private int[] sortingList;
     private int listPointer = 0;
+
+    // Algorithm
+    [SerializeField] private ListInstruction[] instructions;
+    private int currentInstruction = 0;
     private bool finishedAlgorithm = false;
     private int left = -1, right = 1;
 
@@ -48,11 +61,25 @@ public class ListManager : MonoBehaviour
         }
         uiListManager.UpdateList(displayList);
 
-        if (!finishedAlgorithm)
+        if (instructions.Length > 0)
         {
-            ExecuteInstruction(ListInstruction.swapRight);
-            ExecuteInstruction(ListInstruction.moveRight);
+            timeSinceInstruction += Time.deltaTime;
+            if (timeSinceInstruction > instructionDuration)
+            {
+                timeSinceInstruction -= instructionDuration;
+
+                if (!finishedAlgorithm)
+                {
+                    NextInstruction();
+                }
+            }
         }
+    }
+
+    private void NextInstruction()
+    {
+        ExecuteInstruction(instructions[currentInstruction]);
+        currentInstruction = (currentInstruction + 1) % instructions.Length;
     }
 
     private void ExecuteInstruction(ListInstruction instruction)
