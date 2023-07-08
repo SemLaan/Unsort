@@ -2131,6 +2131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92591b1afe590246a65520ef62a46d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  instructionDuration: 1
+  listSize: 100
+  instructions: 000000000000000002000000
 --- !u!4 &1226008912
 Transform:
   m_ObjectHideFlags: 0
