@@ -50,20 +50,7 @@ public class ListManager : MonoBehaviour
 
     private void Update()
     {
-        if (instructions.Length > 0)
-        {
-            timeSinceInstruction += Time.deltaTime;
-            if (timeSinceInstruction > instructionDuration)
-            {
-                timeSinceInstruction -= instructionDuration;
-
-                if (!finishedAlgorithm)
-                {
-                    NextInstruction();
-                }
-            }
-        }
-
+        InstructionUpdate();
         UpdateUI();
     }
 
@@ -95,6 +82,23 @@ public class ListManager : MonoBehaviour
     {
         finishedAlgorithm = true;
         randomnessUIElement.text = "Randomness: " + RandomnessGrade.GradeRandomness(sortingList);
+    }
+
+    private void InstructionUpdate()
+    {
+        if (instructions.Length == 0)
+            return;
+
+        timeSinceInstruction += Time.deltaTime;
+        if (timeSinceInstruction > instructionDuration)
+        {
+            timeSinceInstruction -= instructionDuration;
+
+            if (!finishedAlgorithm)
+            {
+                NextInstruction();
+            }
+        }
     }
 
     private void NextInstruction()
