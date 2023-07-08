@@ -23,7 +23,10 @@ public class UIListManager : MonoBehaviour
 
         for (int i = 0; i < data.Length; i++)
         {
-            uiNumberComponents[i].text = data[i].ToString();
+            if (data[i] == -1)
+                uiNumberComponents[i].text = "";
+            else
+                uiNumberComponents[i].text = data[i].ToString();
         }
     }
 }
