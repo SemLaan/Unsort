@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class UIListManager : MonoBehaviour
 {
-
+    public int pointerNumber = 0;
     private TMP_Text[] uiNumberComponents;
     public int VisibleNumbers { get; private set; }
 

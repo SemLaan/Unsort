@@ -59,10 +59,10 @@ public class ListManager : MonoBehaviour
         int[] displayList = new int[visibleNumbers];
         for (int i = 0; i < visibleNumbers; i++)
         {
-            if (listPointer + i < 0 || listPointer + i >= listSize)
+            if (listPointer + i - uiListManager.pointerNumber < 0 || listPointer + i - uiListManager.pointerNumber >= listSize)
                 displayList[i] = -1;
             else
-                displayList[i] = sortingList[listPointer + i];
+                displayList[i] = sortingList[listPointer + i - uiListManager.pointerNumber];
         }
         uiListManager.UpdateList(displayList);
 
