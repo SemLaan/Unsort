@@ -8,4 +8,5 @@ public enum ListInstruction
     moveLeft,
     swapRight,
     swapLeft,
+    invertInstructions,
 }

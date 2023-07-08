@@ -123,6 +123,9 @@ public class ListManager : MonoBehaviour
             case ListInstruction.swapLeft:
                 Swap(left); // swap the current element with the element to the left
                 break;
+            case ListInstruction.invertInstructions:
+                InvertInstructions(); // Swap left and right
+                break;
         }
     }
 
@@ -142,6 +145,12 @@ public class ListManager : MonoBehaviour
         int temp = sortingList[listPointer];
         sortingList[listPointer] = sortingList[listPointer + direction];
         sortingList[listPointer + direction] = temp;
+    }
+
+    private void InvertInstructions()
+    {
+        right *= -1; 
+        left *= -1;
     }
 
     #endregion
