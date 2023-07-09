@@ -35,10 +35,6 @@ public class InstructionButton : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left) {
-            instructionStack.AddToSequence(instruction);
-            return;
-        }
-        instructionStack.RemoveFromSequence(instruction);
+        instructionStack.AddToSequence(instruction);
     }
 }

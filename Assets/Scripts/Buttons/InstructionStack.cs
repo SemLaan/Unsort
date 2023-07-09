@@ -71,58 +71,34 @@ public class InstructionStack : MonoBehaviour
         sequence.Add(instruction);
         GameObject textObject = Instantiate<GameObject>(textPrefab, new Vector3(0, 0), Quaternion.identity, transform);
         textObject.GetComponent<RectTransform>().anchoredPosition = gridPositions[sequenceIndex];
+
         TextMeshProUGUI TMPtext = textObject.GetComponent<TextMeshProUGUI>();
         TMPtext.text = getButtonString(instruction);
         textObjects.Add(textObject);
 
+        InstructionSequence instructionSequence = textObject.GetComponent<InstructionSequence>();
+        instructionSequence.SetInstruction(instruction);
+        instructionSequence.index = sequenceIndex;
+
         sequenceIndex += 1;
     }
 
-    public void RemoveFromSequence(ListInstruction instruction)
+    public void RemoveFromSequence(int i)
     {
-        for(int i = sequence.Count - 1; i >= 0; i--)
-        {
-            if(sequence[i] == ListInstruction.moveRight && instruction == ListInstruction.moveRight)
-            {
-                Destroy(textObjects[i]);
-                textObjects.RemoveAt(i);
-                sequence.RemoveAt(i);
-                sequenceIndex -= 1;
-                break;
-            }
-            else if (sequence[i] == ListInstruction.swapRight && instruction == ListInstruction.swapRight)
-            {
-                Destroy(textObjects[i]);
-                textObjects.RemoveAt(i);
-                sequence.RemoveAt(i);
-                sequenceIndex -= 1;
-                break;
-            }
-            else if (sequence[i] == ListInstruction.moveLeft && instruction == ListInstruction.moveLeft)
-            {
-                Destroy(textObjects[i]);
-                textObjects.RemoveAt(i);
-                sequence.RemoveAt(i);
-                sequenceIndex -= 1;
-                break;
-            }
-            else if (sequence[i] == ListInstruction.swapLeft && instruction == ListInstruction.swapLeft)
-            {
-                Destroy(textObjects[i]);
-                textObjects.RemoveAt(i);
-                sequence.RemoveAt(i);
-                sequenceIndex -= 1;
-                break;
-            }
-        }
+        if(sequenceIndex <= 0) { return; }
+        Destroy(textObjects[i]);
+        textObjects.RemoveAt(i);
+        sequence.RemoveAt(i);
+        sequenceIndex -= 1;
 
         UpdateSequence();
     }
 
     private void UpdateSequence()
     {
-        for(int i = 0; i < textObjects.Count; i++)
+        for(int i = 0; i < sequenceIndex; i++)
         {
+            textObjects[i].GetComponent<InstructionSequence>().index = i;
             RectTransform rectTransform = textObjects[i].GetComponent<RectTransform>();
             rectTransform.anchoredPosition = gridPositions[i];
         }
